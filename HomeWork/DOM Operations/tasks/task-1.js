@@ -25,8 +25,7 @@ module.exports = function () {
 
     if (
       !Array.isArray(contents) ||
-      !isNumOrString(x => (typeof x !== 'number' && typeof x !== 'string'), contents)
-      // contents.some(x => (typeof x !== 'number' && typeof x !== 'string'))
+      contents.some(function (x) { return (typeof x !== 'number' && typeof x !== 'string') })
     ) {
       throw Error('invalid contents');
     }
@@ -39,24 +38,9 @@ module.exports = function () {
         throw Error('invalid selector');
       }
     }
-
     // remove all childe
     element.innerHTML = '';
-    for (var index = 0; index < contents.length; index += 1) {
-      element.appendChild(document.createElement('div')).innerHTML = contents[index];
-    }
-    // contents.forEach(x => element.appendChild(document.createElement('div')).innerHTML = x);
-    // var cmd = { arr: [], smn: isNumOrString };
-    function isNumOrString(fun, arr) {
-      var i = 0;
-      while (i < arr.length) {
 
-        if (fun(arr[i++])) {
-          return false;
-        };
-      };
-
-      return true;
-    }
+    contents.forEach(function (x) { element.appendChild(document.createElement('div')).innerHTML = x });
   };
 };
